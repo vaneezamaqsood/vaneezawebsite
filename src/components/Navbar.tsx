@@ -1,7 +1,7 @@
 "use client";
+
 import Link from "next/link";
-import { useState } from "react";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { motion } from "framer-motion";
 
 const links = [
   { href: "/", label: "Home" },
@@ -12,43 +12,29 @@ const links = [
 ];
 
 export default function Navbar() {
-  const { scrollY } = useScroll();
-  const [elevated, setElevated] = useState(false);
-
-  useMotionValueEvent(scrollY, "change", (y) => setElevated(y > 8));
-
   return (
     <motion.header
-      initial={false}
-      animate={{
-        backgroundColor: elevated ? "rgba(10,10,10,0.8)" : "transparent",
-        backdropFilter: elevated ? ("blur(20px)" as unknown as string) : ("blur(0px)" as unknown as string),
-        borderBottomColor: elevated ? "rgba(255,255,255,0.08)" : "transparent",
-      }}
-      className="sticky top-0 z-50 border-b transition-all duration-300"
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      className="sticky top-0 z-50 border-b border-white/10 bg-bg/80 backdrop-blur-md"
     >
       <nav className="container flex items-center justify-between py-4">
-        <Link
-          href="/"
-          className="text-xl font-bold tracking-tight hover:opacity-80 transition-opacity"
-        >
-          Vaneeza<span className="gradient-text">.fi</span>
+        <Link href="/" className="text-xl font-bold">
+          <span className="gradient-text">VM</span>
         </Link>
-        <ul className="hidden md:flex gap-8 text-sm">
+        <div className="hidden md:flex gap-8">
           {links.map((l) => (
-            <li key={l.href}>
-              <Link
-                href={l.href}
-                className="relative text-muted hover:text-fg transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-gradient-to-r after:from-purple-500 after:to-pink-500 hover:after:w-full after:transition-all after:duration-300"
-              >
-                {l.label}
-              </Link>
-            </li>
+            <Link
+              key={l.href}
+              href={l.href}
+              className="text-sm text-muted hover:text-fg transition-colors relative group"
+            >
+              {l.label}
+              <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-gradient-to-r from-purple-500 to-pink-500 group-hover:w-full transition-all duration-300" />
+            </Link>
           ))}
-        </ul>
+        </div>
       </nav>
     </motion.header>
   );
 }
-
-

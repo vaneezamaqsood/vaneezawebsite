@@ -1,132 +1,90 @@
 "use client";
 
-import Hero3D from "@/components/Hero3D";
 import ProjectCard from "@/components/ProjectCard";
-import TestimonialCarousel from "@/components/TestimonialCarousel";
-import Section from "@/components/Section";
 import { projects } from "@/lib/projects";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Mail } from "lucide-react";
+import { CONTACT_EMAIL } from "@/lib/consts";
 
 export default function HomePage() {
   const featured = projects.slice(0, 3);
 
   return (
     <main className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden border-b border-white/5">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-pink-500/5" />
-        <div className="container relative py-20 md:py-32">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6"
+      {/* Simplified Hero Section */}
+      <section className="container py-20 md:py-32">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-4xl mx-auto"
+        >
+          <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
+            Hi, I&apos;m{" "}
+            <span className="gradient-text">Vaneeza Maqsood</span>
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-muted mb-8">
+            Product Designer & Ecosystem Lead crafting meaningful connections between people, technology, and community.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Link
+              href="/work"
+              className="group inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
             >
-              <Sparkles className="w-4 h-4 text-purple-400" />
-              <span className="text-sm text-muted">Product Designer & Ecosystem Lead</span>
-            </motion.div>
-            
-            <h1 className="text-display font-heading mb-6">
-              Designer.{" "}
-              <span className="gradient-text">Community Builder.</span>{" "}
-              Storyteller.
-            </h1>
-            
-            <p className="text-subtitle text-muted mb-10 max-w-2xl mx-auto">
-              I blend <strong className="text-fg">UX</strong>, <strong className="text-fg">AI tools</strong>, and{" "}
-              <strong className="text-fg">marketing</strong> to craft experiences that inspire creativity and connection.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/work"
-                className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
-              >
-                View Work
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 transition-all duration-300"
-              >
-                Get in Touch
-              </Link>
-            </div>
-          </motion.div>
-        </div>
+              View My Work
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 transition-all duration-300"
+            >
+              <Mail className="w-5 h-5" />
+              Let&apos;s Talk
+            </Link>
+          </div>
+        </motion.div>
+      </section>
 
-        {/* 3D Hero */}
-        <div className="container pb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="max-w-4xl mx-auto"
-          >
-            <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-purple-500/10 to-pink-500/10">
-              <Hero3D />
-            </div>
-          </motion.div>
+      {/* Expertise Section */}
+      <section className="container py-16 md:py-24 border-t border-white/5">
+        <h2 className="text-3xl md:text-4xl font-bold mb-12">What I Do</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { title: "UX Design", desc: "Creating intuitive, user-centered experiences that solve real problems." },
+            { title: "AI Tools", desc: "Leveraging AI to build smarter, more efficient design solutions." },
+            { title: "Community Building", desc: "Fostering vibrant ecosystems and meaningful connections." },
+            { title: "Product Strategy", desc: "Bringing a unique perspective to product development." },
+          ].map((item, i) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="p-6 rounded-xl bg-card border border-white/10 hover:border-white/20 transition-all"
+            >
+              <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+              <p className="text-sm text-muted">{item.desc}</p>
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* About Section */}
-      <Section className="container py-20 md:py-32">
-        <div className="max-w-3xl mx-auto text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-title font-heading mb-6"
-          >
-            About
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-body text-muted mb-12"
-          >
-            I&apos;m a product designer and ecosystem lead passionate about creating meaningful connections 
-            between people, technology, and community. With experience in UX design, AI tools, and 
-            community building, I bring a unique perspective to every project.
-          </motion.p>
-          
-          <TestimonialCarousel />
-        </div>
-      </Section>
-
       {/* Featured Work */}
-      <Section className="container py-20 md:py-32">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-12"
-        >
-          <div className="flex items-end justify-between mb-4">
-            <h2 className="text-title font-heading">Featured Work</h2>
-            <Link
-              href="/work"
-              className="group inline-flex items-center gap-2 text-sm text-muted hover:text-fg transition-colors"
-            >
-              See all
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
-          <p className="text-muted">Selected projects showcasing design, community, and innovation</p>
-        </motion.div>
+      <section className="container py-16 md:py-24 border-t border-white/5">
+        <div className="flex items-end justify-between mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold">Selected Work</h2>
+          <Link
+            href="/work"
+            className="group text-muted hover:text-fg transition-colors"
+          >
+            See all
+            <ArrowRight className="inline w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
 
         <div className="grid gap-8 md:grid-cols-3">
           {featured.map((p, index) => (
@@ -135,42 +93,47 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
+              transition={{ delay: index * 0.1 }}
             >
               <ProjectCard p={p} />
             </motion.div>
           ))}
         </div>
-      </Section>
+      </section>
 
-      {/* CTA Section */}
-      <Section className="border-t border-white/5 bg-gradient-to-br from-purple-500/5 to-pink-500/5">
-        <div className="container py-20 md:py-32">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl mx-auto text-center"
-          >
-            <h2 className="text-title font-heading mb-6">
-              Let&apos;s build something <span className="gradient-text">amazing</span> together
-            </h2>
-            <p className="text-subtitle text-muted mb-10">
-              Interested in collaborating? I&apos;m always open to discussing new projects and opportunities.
-            </p>
+      {/* Contact Section */}
+      <section className="container py-16 md:py-24 border-t border-white/5">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-3xl mx-auto text-center"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            Let&apos;s <span className="gradient-text">Work Together</span>
+          </h2>
+          <p className="text-lg text-muted mb-8">
+            I&apos;m always interested in hearing about new projects and opportunities. 
+            Whether you have a question or just want to say hi, feel free to reach out!
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:shadow-lg transition-all"
             >
-              Get in Touch
+              <Mail className="w-5 h-5" />
+              Email Me
+            </Link>
+            <Link
+              href="/work"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 transition-all"
+            >
+              View Work
               <ArrowRight className="w-5 h-5" />
             </Link>
-          </motion.div>
-        </div>
-      </Section>
+          </div>
+        </motion.div>
+      </section>
     </main>
   );
 }
-
-
