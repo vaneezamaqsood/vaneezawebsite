@@ -2,6 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { v4 as uuidv4 } from "uuid";
 
 interface PixelTrailProps {
   pixelSize?: number;
@@ -19,8 +20,8 @@ export default function PixelTrail({
   children,
 }: PixelTrailProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [trigger, setTrigger] = useState(0);
-  const activePixelsRef = useRef<Set<string>>(new Set());
+  const trailId = useRef(uuidv4());
+  const [activePixels, setActivePixels] = useState<Map<string, number>>(new Map());
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -32,27 +33,34 @@ export default function PixelTrail({
 
       const key = `${x}-${y}`;
       
-      if (!activePixelsRef.current.has(key)) {
-        activePixelsRef.current.add(key);
-        setTrigger(prev => prev + 1);
+      setActivePixels((prev) => {
+        const newMap = new Map(prev);
+        const now = Date.now();
         
+        // Activate this pixel
+        newMap.set(key, now);
+        
+        // Auto-remove after fade duration
         setTimeout(() => {
-          activePixelsRef.current.delete(key);
-          setTrigger(prev => prev + 1);
+          setActivePixels((current) => {
+            const updated = new Map(current);
+            updated.delete(key);
+            return updated;
+          });
         }, fadeDuration);
-      }
+        
+        return newMap;
+      });
     },
     [pixelSize, fadeDuration]
   );
 
-  if (!containerRef.current) return null;
-
-  const columns = Math.ceil(
-    (containerRef.current?.offsetWidth || 0) / pixelSize
-  );
-  const rows = Math.ceil(
-    (containerRef.current?.offsetHeight || 0) / pixelSize
-  );
+  const columns = containerRef.current 
+    ? Math.ceil((containerRef.current.offsetWidth || 0) / pixelSize)
+    : 0;
+  const rows = containerRef.current 
+    ? Math.ceil((containerRef.current.offsetHeight || 0) / pixelSize)
+    : 0;
 
   return (
     <div
@@ -62,37 +70,42 @@ export default function PixelTrail({
     >
       {children}
       
-      <div className="absolute inset-0 pointer-events-none">
-        {Array.from({ length: rows }).map((_, rowIndex) => (
-          <div key={rowIndex} className="flex">
-            {Array.from({ length: columns }).map((_, colIndex) => {
-              const key = `${colIndex}-${rowIndex}`;
-              const isActive = activePixelsRef.current.has(key);
-              
-              return (
-                <motion.div
-                  key={key}
-                  className="border border-white/5"
-                  style={{
-                    width: `${pixelSize}px`,
-                    height: `${pixelSize}px`,
-                  }}
-                  animate={{
-                    opacity: isActive ? 1 : 0,
-                    backgroundColor: isActive 
-                      ? "rgba(99, 102, 241, 0.5)" 
-                      : "transparent",
-                  }}
-                  transition={{
-                    duration: fadeDuration / 1000,
-                    delay: delay / 1000,
-                  }}
-                />
-              );
-            })}
-          </div>
-        ))}
-      </div>
+      {columns > 0 && rows > 0 && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {Array.from({ length: rows }).map((_, rowIndex) => (
+            <div key={rowIndex} className="flex">
+              {Array.from({ length: columns }).map((_, colIndex) => {
+                const key = `${colIndex}-${rowIndex}`;
+                const isActive = activePixels.has(key);
+                
+                return (
+                  <motion.div
+                    key={key}
+                    id={`${trailId.current}-pixel-${colIndex}-${rowIndex}`}
+                    className="border border-white/5"
+                    style={{
+                      width: `${pixelSize}px`,
+                      height: `${pixelSize}px`,
+                      minWidth: `${pixelSize}px`,
+                      minHeight: `${pixelSize}px`,
+                    }}
+                    animate={{
+                      opacity: isActive ? 1 : 0,
+                      backgroundColor: isActive 
+                        ? "rgba(99, 102, 241, 0.5)" 
+                        : "transparent",
+                    }}
+                    transition={{
+                      duration: fadeDuration / 1000,
+                      delay: delay / 1000,
+                    }}
+                  />
+                );
+              })}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

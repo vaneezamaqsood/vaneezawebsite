@@ -1,6 +1,7 @@
 "use client";
 
 import ProjectCard from "@/components/ProjectCard";
+import PixelTrail from "@/components/PixelTrail";
 import { projects } from "@/lib/projects";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -13,12 +14,13 @@ export default function HomePage() {
   return (
     <main className="min-h-screen">
       {/* Simplified Hero Section */}
-      <section className="container py-20 md:py-32">
+      <section className="container py-20 md:py-32 relative">
+        <PixelTrail pixelSize={50} fadeDuration={1000} className="absolute inset-0 -z-10" />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto"
+          className="max-w-4xl mx-auto relative z-10"
         >
           <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
             Hi, I&apos;m{" "}
