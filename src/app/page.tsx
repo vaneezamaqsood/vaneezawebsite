@@ -20,18 +20,18 @@ export default function HomePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto relative z-10"
+          className="max-w-4xl mx-auto relative z-10 text-center"
         >
           <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
             Hi, I&apos;m{" "}
-            <span className="gradient-text">Vaneeza Maqsood</span>
+            <span className="text-white">Vaneeza Maqsood</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-muted mb-8">
             Product Designer & Ecosystem Lead crafting meaningful connections between people, technology, and community.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/work"
               className="group inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
