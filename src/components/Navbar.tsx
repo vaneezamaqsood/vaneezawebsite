@@ -21,21 +21,26 @@ export default function Navbar() {
     <motion.header
       initial={false}
       animate={{
-        backgroundColor: elevated ? "rgba(10,10,10,0.6)" : "transparent",
-        // inline blur to avoid 'any' type
-        backdropFilter: elevated ? ("blur(10px)" as unknown as string) : ("blur(0px)" as unknown as string),
-        borderBottomColor: elevated ? "rgba(255,255,255,0.06)" : "transparent",
+        backgroundColor: elevated ? "rgba(10,10,10,0.8)" : "transparent",
+        backdropFilter: elevated ? ("blur(20px)" as unknown as string) : ("blur(0px)" as unknown as string),
+        borderBottomColor: elevated ? "rgba(255,255,255,0.08)" : "transparent",
       }}
-      className="sticky top-0 z-50 border-b"
+      className="sticky top-0 z-50 border-b transition-all duration-300"
     >
-      <nav className="container flex items-center justify-between py-3">
-        <Link href="/" className="font-semibold tracking-tight">
+      <nav className="container flex items-center justify-between py-4">
+        <Link
+          href="/"
+          className="text-xl font-bold tracking-tight hover:opacity-80 transition-opacity"
+        >
           Vaneeza<span className="gradient-text">.fi</span>
         </Link>
-        <ul className="flex gap-5 text-sm">
+        <ul className="hidden md:flex gap-8 text-sm">
           {links.map((l) => (
             <li key={l.href}>
-              <Link href={l.href} className="hover:opacity-90">
+              <Link
+                href={l.href}
+                className="relative text-muted hover:text-fg transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-gradient-to-r after:from-purple-500 after:to-pink-500 hover:after:w-full after:transition-all after:duration-300"
+              >
                 {l.label}
               </Link>
             </li>
