@@ -4,9 +4,10 @@ import { Canvas } from "@react-three/fiber";
 import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
 import { Suspense, useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
+import * as THREE from "three";
 
 function Avatar() {
-  const group = useRef<any>();
+  const group = useRef<THREE.Group>(null);
   const { scene } = useGLTF("/models/model.glb");
   
   return (

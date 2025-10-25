@@ -26,7 +26,7 @@ export default function ContactPage() {
             transition={{ duration: 0.6 }}
             className="text-display font-heading mb-6"
           >
-            Let's Connect
+            Let&apos;s Connect
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -34,7 +34,7 @@ export default function ContactPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-subtitle text-muted mb-12"
           >
-            I'm open to roles, collaborations, and creative projects. Let's build something amazing together.
+            I&apos;m open to roles, collaborations, and creative projects. Let&apos;s build something amazing together.
           </motion.p>
         </div>
       </Section>

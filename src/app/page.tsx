@@ -97,7 +97,7 @@ export default function HomePage() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-body text-muted mb-12"
           >
-            I'm a product designer and ecosystem lead passionate about creating meaningful connections 
+            I&apos;m a product designer and ecosystem lead passionate about creating meaningful connections 
             between people, technology, and community. With experience in UX design, AI tools, and 
             community building, I bring a unique perspective to every project.
           </motion.p>
@@ -154,10 +154,10 @@ export default function HomePage() {
             className="max-w-3xl mx-auto text-center"
           >
             <h2 className="text-title font-heading mb-6">
-              Let's build something <span className="gradient-text">amazing</span> together
+              Let&apos;s build something <span className="gradient-text">amazing</span> together
             </h2>
             <p className="text-subtitle text-muted mb-10">
-              Interested in collaborating? I'm always open to discussing new projects and opportunities.
+              Interested in collaborating? I&apos;m always open to discussing new projects and opportunities.
             </p>
             <Link
               href="/contact"

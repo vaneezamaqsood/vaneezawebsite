@@ -31,7 +31,7 @@ export default function TestimonialCarousel() {
                 transition={{ duration: 0.6 }}
                 className="text-xl md:text-2xl font-medium text-fg mb-6"
               >
-                "{testimonial.quote}"
+                &ldquo;{testimonial.quote}&rdquo;
               </motion.blockquote>
               <div className="text-muted">
                 <p className="font-semibold">{testimonial.author}</p>

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,7 +15,6 @@ interface ProjectPageProps {
 export default function ProjectPage({ params }: ProjectPageProps) {
   const project = projects.find((p) => p.slug === params.slug);
   const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   if (!project) {
     notFound();
@@ -30,8 +29,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
       {/* Progress Bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500 z-50"
-        style={{ scaleX: scrollYProgress }}
-        transformOrigin="0%"
+        style={{ scaleX: scrollYProgress, transformOrigin: "0%" }}
       />
 
       {/* Hero Section */}
