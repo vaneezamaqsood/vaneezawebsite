@@ -1,13 +1,65 @@
-
-@import "tw-animate-css";
-
-@plugin "tailwindcss-animate";
-
-@custom-variant dark (&:is(.dark *));
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: #0A0A0A;
+  --color-fg: #F5F5F5;
+  --color-muted: #B3B3B3;
+  --color-card: #121212;
+  --color-ring: #7C7C7C;
+}
+
+html, body {
+  @apply bg-bg text-fg antialiased;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+a {
+  @apply underline-offset-4 decoration-transparent hover:decoration-fg transition;
+}
+
+:root {
+  --gradient: linear-gradient(135deg, #8E2DE2 0%, #4A00E0 50%, #FF6EC7 100%);
+}
+
+.gradient-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.card {
+  @apply bg-card;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+  border-radius: 1rem;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
 
 :root {
   color-scheme: dark;
