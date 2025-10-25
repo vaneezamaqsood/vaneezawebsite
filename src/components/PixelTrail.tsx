@@ -12,17 +12,15 @@ interface PixelTrailProps {
 }
 
 export default function PixelTrail({
-  pixelSize = 30,
-  fadeDuration = 600,
+  pixelSize = 40,
+  fadeDuration = 800,
   delay = 0,
   className = "",
   children,
 }: PixelTrailProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [activePixels, setActivePixels] = useState<Map<string, number>>(
-    new Map()
-  );
-  const pixelKeyCounter = useRef(0);
+  const [trigger, setTrigger] = useState(0);
+  const activePixelsRef = useRef<Set<string>>(new Set());
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -34,23 +32,20 @@ export default function PixelTrail({
 
       const key = `${x}-${y}`;
       
-      if (!activePixels.has(key)) {
-        setActivePixels((prev) => {
-          const newMap = new Map(prev);
-          newMap.set(key, Date.now());
-          setTimeout(() => {
-            setActivePixels((current) => {
-              const updated = new Map(current);
-              updated.delete(key);
-              return updated;
-            });
-          }, fadeDuration);
-          return newMap;
-        });
+      if (!activePixelsRef.current.has(key)) {
+        activePixelsRef.current.add(key);
+        setTrigger(prev => prev + 1);
+        
+        setTimeout(() => {
+          activePixelsRef.current.delete(key);
+          setTrigger(prev => prev + 1);
+        }, fadeDuration);
       }
     },
-    [pixelSize, fadeDuration, activePixels]
+    [pixelSize, fadeDuration]
   );
+
+  if (!containerRef.current) return null;
 
   const columns = Math.ceil(
     (containerRef.current?.offsetWidth || 0) / pixelSize
@@ -72,7 +67,7 @@ export default function PixelTrail({
           <div key={rowIndex} className="flex">
             {Array.from({ length: columns }).map((_, colIndex) => {
               const key = `${colIndex}-${rowIndex}`;
-              const isActive = activePixels.has(key);
+              const isActive = activePixelsRef.current.has(key);
               
               return (
                 <motion.div
