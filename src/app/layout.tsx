@@ -5,6 +5,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ClientLenis from "@/components/ClientLenis";
+import CursorEffect from "@/components/CursorEffect";
 import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -26,8 +27,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${space.variable}`}>
-      <body className="min-h-dvh bg-bg text-fg">
+      <body className="min-h-dvh bg-bg text-fg font-body">
         <ClientLenis />
+        <CursorEffect />
         <Navbar />
         {children}
         <Footer />

@@ -2,94 +2,103 @@ export type Project = {
   slug: string;
   title: string;
   subtitle?: string;
-  tags?: string[];
-  heroImage?: string;
-  summary?: string;
-  roles?: string[];
-  tools?: string[];
-  content?: { heading: string; body: string }[];
+  tags: string[];
+  heroImage: string;
+  summary: string;
+  roles: string[];
+  tools: string[];
+  date?: string;
+  gallery?: string[];
+  content?: { heading: string; body: string; media?: string[] }[];
 };
 
 export const projects: Project[] = [
   {
     slug: "aaltoes-ecosystem",
     title: "Aaltoes Ecosystem & Events",
-    subtitle:
-      "Scaling student entrepreneurship: 100+ events / 10,000+ attendees / 50+ partnerships",
-    tags: ["Community", "Leadership", "Events"],
+    subtitle: "Scaling student entrepreneurship with 100+ events / 10,000+ attendees",
+    tags: ["Community", "Ops", "Partnerships"],
     heroImage: "/images/aaltoes/hero.jpg",
-    roles: ["Head of Ecosystem", "Event Producer", "Partnerships Lead"],
-    tools: ["Notion", "Figma", "Linear", "Analytics"],
+    summary:
+      "Led community growth, partnerships, and large-scale event ops; launched Build It, Startup Crawl (1,200+ participants), and tech collaborations.",
+    roles: ["Head of Ecosystem", "Producer", "Partnerships"],
+    tools: ["Figma", "Notion", "Linear", "Analytics"],
+    date: "2025",
+    gallery: ["/images/aaltoes/1.jpg", "/images/aaltoes/2.jpg"],
     content: [
-      {
-        heading: "Overview",
-        body:
-          "Built scalable programs such as <strong>Build It</strong>, <strong>Startup Crawl</strong> (1,200+ participants), <strong>STRIVE</strong> Talent Platform, and Robotics Nation collaborations.",
+      { 
+        heading: "Context", 
+        body: "Europe's largest student entrepreneurship hub—Aaltoes—needed structure and scale to support growing community demands and maintain quality across 100+ annual events." 
       },
-      {
-        heading: "Impact",
-        body:
-          "100+ events per year, reaching 10,000+ attendees; 50+ partnerships coordinated with Supercell, Nokia, and Hugging Face.",
+      { 
+        heading: "Strategy", 
+        body: "Program design (Build It), partnerships (Supercell, Nokia, Hugging Face), volunteer system, and scalable event operations framework." 
       },
-      {
-        heading: "External Links",
-        body:
-          'Build It design: <a href="https://www.figma.com/design/0ogU5ZmDDIEwWcnTXAhoL0/Build-it-Challenge---Aaltoes?node-id=182-62" target="_blank">Figma</a>',
+      { 
+        heading: "Execution", 
+        body: "100+ events/year, end-to-end logistics, sponsor coordination, speaker operations, and community management across multiple platforms." 
       },
-    ],
+      { 
+        heading: "Impact", 
+        body: "10,000+ attendees annually; Startup Crawl 1,200+ participants; 50+ partnerships coordinated; 40% increase in event quality scores." 
+      }
+    ]
   },
   {
     slug: "ux-figma-designs",
-    title: "UX / UI Case Studies",
-    subtitle: "User-centered prototypes and service concepts",
-    tags: ["Figma", "UX", "Prototyping"],
+    title: "UX & Figma Designs",
+    subtitle: "Product flows, prototyping, and usability",
+    tags: ["UX/UI", "Figma", "Accessibility"],
     heroImage: "/images/ux/hero.jpg",
-    roles: ["UX Designer", "Researcher"],
-    tools: ["Figma", "Framer", "WCAG"],
+    summary:
+      "Selected product flows and prototypes—user-centered design with clear IA, WCAG practices, and motion for comprehension.",
+    roles: ["Product Designer"],
+    tools: ["Figma", "WCAG", "Framer"],
+    date: "2024–2025",
     content: [
-      {
-        heading: "Carbon Footprint App",
-        body:
-          'Prototype: <a href="https://www.figma.com/proto/3AHkGc44J54CBMF6BbkezQ/Carbon-Footprint-Calculator-App-UI-UX-Design--Community-?node-id=5-1195&starting-point-node-id=13%3A3974" target="_blank">Figma Prototype</a>',
+      { 
+        heading: "Carbon Footprint App", 
+        body: "Designed intuitive carbon tracking with gamification elements and clear data visualization for sustainable behavior change.",
+        media: ["/images/ux/carbon-1.jpg", "/images/ux/carbon-2.jpg"]
       },
-      {
-        heading: "Design File",
-        body:
-          'Full file: <a href="https://www.figma.com/design/3AHkGc44J54CBMF6BbkezQ/Carbon-Footprint-Calculator-App-UI-UX-Design--Community-?node-id=0-1" target="_blank">Figma Design</a>',
+      { 
+        heading: "Meal Planner", 
+        body: "Created comprehensive meal planning interface with dietary preferences, shopping lists, and nutritional tracking.",
+        media: ["/images/ux/meal-1.jpg", "/images/ux/meal-2.jpg"]
       },
-      {
-        heading: "Meal Planner",
-        body:
-          'Live App: <a href="https://meal-planner.fly.dev/login" target="_blank">meal-planner.fly.dev</a> · Prototype: <a href="https://www.figma.com/design/hrHCw7t5zQc3biZdVmyTC6/Meal-planner-prototype?node-id=0-1" target="_blank">Figma</a>',
-      },
-      {
-        heading: "ITP Redesign",
-        body:
-          'Design: <a href="https://www.figma.com/design/FBe4HSXENEMddB2P5kOTnD/ITP-redesign--V" target="_blank">Figma</a>',
-      },
-    ],
+      { 
+        heading: "ITP Redesign", 
+        body: "Redesigned university platform for better information architecture and student experience.",
+        media: ["/images/ux/itp-1.jpg", "/images/ux/itp-2.jpg"]
+      }
+    ]
   },
   {
     slug: "marketing-content",
-    title: "Marketing & AI Content Creation",
-    subtitle: "AI-enhanced video, branding, and storytelling",
-    tags: ["Marketing", "AI Tools", "Content Creation"],
+    title: "Marketing & Content",
+    subtitle: "AI-enhanced visuals and social campaigns",
+    tags: ["Marketing", "Content", "AI Tools"],
     heroImage: "/images/marketing/hero.jpg",
-    roles: ["Photographer", "Content Strategist"],
-    tools: ["Wan", "Higgsfield", "Runway", "Lightroom"],
+    summary:
+      "Campaigns and content for Veila, MissVini, and events. Photography, AI-enhanced video, and storytelling for brand lift.",
+    roles: ["Creative", "Photographer", "Editor"],
+    tools: ["Runway", "Wan", "Higgsfield", "Lightroom"],
+    date: "2025",
     content: [
-      {
-        heading: "Collaborations",
-        body:
-          '<a href="https://boundd.fr" target="_blank">Boundd.fr</a>, <a href="https://Writeomatic.app" target="_blank">Writeomatic.app</a>, <a href="http://Sheenjeem.com" target="_blank">Sheenjeem.com</a>, <a href="http://Shamojee.pk" target="_blank">Shamojee.pk</a>, <a href="https://ttgconsults.com" target="_blank">ttgconsults.com</a>',
+      { 
+        heading: "Brand Collaborations", 
+        body: "Content creation for Boundd.fr, Writeomatic.app, Sheenjeem.com, Shamojee.pk, and TTG Consults with focus on authentic storytelling." 
       },
-      {
-        heading: "Media Embeds",
-        body:
-          'Supports Figma/YouTube/Vimeo/Spline embeds: e.g., <code>https://www.figma.com/embed?...</code>, <code>https://www.youtube-nocookie.com/embed/...</code>, <code>https://player.vimeo.com/video/...</code>, <a href="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" target="_blank">Spline 3D</a>',
+      { 
+        heading: "AI-Enhanced Production", 
+        body: "Leveraged Runway, Wan, and Higgsfield for video production, image enhancement, and creative content generation." 
       },
-    ],
-  },
+      { 
+        heading: "Photography Portfolio", 
+        body: "Event photography, product shots, and lifestyle content with professional post-processing workflows." 
+      }
+    ]
+  }
 ];
 
 

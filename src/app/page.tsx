@@ -2,6 +2,8 @@
 
 import Hero3D from "@/components/Hero3D";
 import ProjectCard from "@/components/ProjectCard";
+import TestimonialCarousel from "@/components/TestimonialCarousel";
+import Section from "@/components/Section";
 import { projects } from "@/lib/projects";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -32,13 +34,13 @@ export default function HomePage() {
               <span className="text-sm text-muted">Product Designer & Ecosystem Lead</span>
             </motion.div>
             
-            <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
+            <h1 className="text-display font-heading mb-6">
               Designer.{" "}
               <span className="gradient-text">Community Builder.</span>{" "}
               Storyteller.
             </h1>
             
-            <p className="text-xl md:text-2xl text-muted mb-10 max-w-2xl mx-auto">
+            <p className="text-subtitle text-muted mb-10 max-w-2xl mx-auto">
               I blend <strong className="text-fg">UX</strong>, <strong className="text-fg">AI tools</strong>, and{" "}
               <strong className="text-fg">marketing</strong> to craft experiences that inspire creativity and connection.
             </p>
@@ -76,8 +78,36 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* About Section */}
+      <Section className="container py-20 md:py-32">
+        <div className="max-w-3xl mx-auto text-center">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-title font-heading mb-6"
+          >
+            About
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-body text-muted mb-12"
+          >
+            I'm a product designer and ecosystem lead passionate about creating meaningful connections 
+            between people, technology, and community. With experience in UX design, AI tools, and 
+            community building, I bring a unique perspective to every project.
+          </motion.p>
+          
+          <TestimonialCarousel />
+        </div>
+      </Section>
+
       {/* Featured Work */}
-      <section className="container py-20 md:py-32">
+      <Section className="container py-20 md:py-32">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -86,7 +116,7 @@ export default function HomePage() {
           className="mb-12"
         >
           <div className="flex items-end justify-between mb-4">
-            <h2 className="text-3xl md:text-5xl font-bold">Featured Work</h2>
+            <h2 className="text-title font-heading">Featured Work</h2>
             <Link
               href="/work"
               className="group inline-flex items-center gap-2 text-sm text-muted hover:text-fg transition-colors"
@@ -111,10 +141,10 @@ export default function HomePage() {
             </motion.div>
           ))}
         </div>
-      </section>
+      </Section>
 
       {/* CTA Section */}
-      <section className="border-t border-white/5 bg-gradient-to-br from-purple-500/5 to-pink-500/5">
+      <Section className="border-t border-white/5 bg-gradient-to-br from-purple-500/5 to-pink-500/5">
         <div className="container py-20 md:py-32">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -123,10 +153,10 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
             className="max-w-3xl mx-auto text-center"
           >
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">
+            <h2 className="text-title font-heading mb-6">
               Let's build something <span className="gradient-text">amazing</span> together
             </h2>
-            <p className="text-xl text-muted mb-10">
+            <p className="text-subtitle text-muted mb-10">
               Interested in collaborating? I'm always open to discussing new projects and opportunities.
             </p>
             <Link
@@ -138,7 +168,7 @@ export default function HomePage() {
             </Link>
           </motion.div>
         </div>
-      </section>
+      </Section>
     </main>
   );
 }
