@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { v4 as uuidv4 } from "uuid";
 
@@ -13,8 +13,8 @@ interface PixelTrailProps {
 }
 
 export default function PixelTrail({
-  pixelSize = 40,
-  fadeDuration = 800,
+  pixelSize = 50,
+  fadeDuration = 1000,
   delay = 0,
   className = "",
   children,
@@ -22,6 +22,21 @@ export default function PixelTrail({
   const containerRef = useRef<HTMLDivElement>(null);
   const trailId = useRef(uuidv4());
   const [activePixels, setActivePixels] = useState<Map<string, number>>(new Map());
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (containerRef.current) {
+        setDimensions({
+          width: containerRef.current.offsetWidth,
+          height: containerRef.current.offsetHeight,
+        });
+      }
+    };
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -35,19 +50,20 @@ export default function PixelTrail({
       
       setActivePixels((prev) => {
         const newMap = new Map(prev);
-        const now = Date.now();
         
-        // Activate this pixel
-        newMap.set(key, now);
-        
-        // Auto-remove after fade duration
-        setTimeout(() => {
-          setActivePixels((current) => {
-            const updated = new Map(current);
-            updated.delete(key);
-            return updated;
-          });
-        }, fadeDuration);
+        if (!newMap.has(key)) {
+          // Activate this pixel
+          newMap.set(key, Date.now());
+          
+          // Auto-remove after fade duration
+          setTimeout(() => {
+            setActivePixels((current) => {
+              const updated = new Map(current);
+              updated.delete(key);
+              return updated;
+            });
+          }, fadeDuration);
+        }
         
         return newMap;
       });
@@ -55,12 +71,16 @@ export default function PixelTrail({
     [pixelSize, fadeDuration]
   );
 
-  const columns = containerRef.current 
-    ? Math.ceil((containerRef.current.offsetWidth || 0) / pixelSize)
-    : 0;
-  const rows = containerRef.current 
-    ? Math.ceil((containerRef.current.offsetHeight || 0) / pixelSize)
-    : 0;
+  const columns = Math.ceil(dimensions.width / pixelSize);
+  const rows = Math.ceil(dimensions.height / pixelSize);
+
+  if (columns === 0 || rows === 0) {
+    return (
+      <div ref={containerRef} className={`relative w-full h-full ${className}`}>
+        {children}
+      </div>
+    );
+  }
 
   return (
     <div
@@ -70,42 +90,38 @@ export default function PixelTrail({
     >
       {children}
       
-      {columns > 0 && rows > 0 && (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {Array.from({ length: rows }).map((_, rowIndex) => (
-            <div key={rowIndex} className="flex">
-              {Array.from({ length: columns }).map((_, colIndex) => {
-                const key = `${colIndex}-${rowIndex}`;
-                const isActive = activePixels.has(key);
-                
-                return (
-                  <motion.div
-                    key={key}
-                    id={`${trailId.current}-pixel-${colIndex}-${rowIndex}`}
-                    className="border border-white/5"
-                    style={{
-                      width: `${pixelSize}px`,
-                      height: `${pixelSize}px`,
-                      minWidth: `${pixelSize}px`,
-                      minHeight: `${pixelSize}px`,
-                    }}
-                    animate={{
-                      opacity: isActive ? 1 : 0,
-                      backgroundColor: isActive 
-                        ? "rgba(99, 102, 241, 0.5)" 
-                        : "transparent",
-                    }}
-                    transition={{
-                      duration: fadeDuration / 1000,
-                      delay: delay / 1000,
-                    }}
-                  />
-                );
-              })}
-            </div>
-          ))}
-        </div>
-      )}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {Array.from({ length: rows }).map((_, rowIndex) => (
+          <div key={rowIndex} className="flex">
+            {Array.from({ length: columns }).map((_, colIndex) => {
+              const key = `${colIndex}-${rowIndex}`;
+              const isActive = activePixels.has(key);
+              
+              return (
+                <motion.div
+                  key={key}
+                  id={`${trailId.current}-pixel-${colIndex}-${rowIndex}`}
+                  className="border border-white/5"
+                  style={{
+                    width: `${pixelSize}px`,
+                    height: `${pixelSize}px`,
+                  }}
+                  animate={{
+                    opacity: isActive ? 1 : 0,
+                    backgroundColor: isActive 
+                      ? "rgba(99, 102, 241, 0.5)" 
+                      : "transparent",
+                  }}
+                  transition={{
+                    duration: fadeDuration / 1000,
+                    delay: delay / 1000,
+                  }}
+                />
+              );
+            })}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
