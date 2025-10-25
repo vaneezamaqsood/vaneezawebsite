@@ -15,7 +15,7 @@ export default function HomePage() {
     <main className="min-h-screen">
       {/* Simplified Hero Section */}
       <section className="container py-20 md:py-32 relative">
-        <PixelTrail pixelSize={50} fadeDuration={1000} className="absolute inset-0 -z-10" />
+        <PixelTrail pixelSize={50} fadeDuration={1000} />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
