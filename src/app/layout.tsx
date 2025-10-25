@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ClientLenis from "@/components/ClientLenis";
 import CursorEffect from "@/components/CursorEffect";
+import StaticFeatures from "@/components/StaticFeatures";
 import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${inter.variable} ${space.variable}`}>
       <body className="min-h-dvh bg-bg text-fg font-body">
         <ClientLenis />
+        <StaticFeatures />
         <CursorEffect />
         <Navbar />
         {children}

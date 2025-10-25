@@ -1,25 +1,40 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
-import { Suspense, useEffect, useState, useRef } from "react";
+import { Environment, OrbitControls } from "@react-three/drei";
+import { Suspense, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import * as THREE from "three";
 
-function Avatar() {
-  const group = useRef<THREE.Group>(null);
-  const { scene } = useGLTF("/models/model.glb");
-  
+// Simple colorful character similar to the static design
+function SimpleAvatar() {
   return (
-    <primitive 
-      ref={group} 
-      object={scene} 
-      position={[0, -1.1, 0]} 
-      rotation={[0, 0.4, 0]}
-    />
+    <group rotation={[0, 0, 0]}>
+      {/* Head */}
+      <mesh position={[0, 2, 0]}>
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshPhongMaterial color="#6366f1" shininess={100} />
+      </mesh>
+      
+      {/* Body */}
+      <mesh position={[0, 0, 0]}>
+        <cylinderGeometry args={[0.8, 1, 2, 32]} />
+        <meshPhongMaterial color="#8b5cf6" shininess={100} />
+      </mesh>
+      
+      {/* Left Arm */}
+      <mesh position={[-1.2, 0.5, 0]} rotation={[0, 0, Math.PI / 4]}>
+        <cylinderGeometry args={[0.2, 0.2, 1.5, 16]} />
+        <meshPhongMaterial color="#ec4899" shininess={100} />
+      </mesh>
+      
+      {/* Right Arm */}
+      <mesh position={[1.2, 0.5, 0]} rotation={[0, 0, -Math.PI / 4]}>
+        <cylinderGeometry args={[0.2, 0.2, 1.5, 16]} />
+        <meshPhongMaterial color="#ec4899" shininess={100} />
+      </mesh>
+    </group>
   );
 }
-useGLTF.preload("/models/model.glb");
 
 export default function Hero3D() {
   const [hasModel, setHasModel] = useState<boolean | null>(null);
@@ -42,20 +57,19 @@ export default function Hero3D() {
 
   return (
     <div className="relative h-[60vh] md:h-[80vh] w-full overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-purple-500/10 to-pink-500/10">
-      <Canvas camera={{ position: [0, 0, 3.5], fov: 40 }}>
+      <Canvas camera={{ position: [0, 2, 8], fov: 75 }}>
         <ambientLight intensity={0.6} />
-        <directionalLight position={[2, 2, 2]} intensity={1.2} />
+        <directionalLight position={[5, 5, 5]} intensity={0.8} />
+        <pointLight position={[-5, 5, 5]} intensity={1} color={0x6366f1} />
         {hasModel ? (
           <Suspense fallback={null}>
-            <Avatar />
+            {/* We'll keep the original model loading logic if you have a model */}
+            <SimpleAvatar />
             <Environment preset="city" />
           </Suspense>
         ) : (
           <>
-            <mesh>
-              <icosahedronGeometry args={[1, 1]} />
-              <meshStandardMaterial color="#8ab4ff" roughness={0.35} metalness={0.25} />
-            </mesh>
+            <SimpleAvatar />
             <Environment preset="city" />
           </>
         )}
