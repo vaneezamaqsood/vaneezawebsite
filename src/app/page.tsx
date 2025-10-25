@@ -9,12 +9,12 @@ import { ArrowRight, Mail } from "lucide-react";
 import { CONTACT_EMAIL } from "@/lib/consts";
 
 const workImages = [
-  "/images/work1.jpg",
-  "/images/work2.jpg", 
-  "/images/work3.jpg",
-  "/images/work4.jpg",
-  "/images/work5.jpg",
-  "/images/work6.jpg",
+  "/work1.jpg",
+  "/work2.jpg", 
+  "/work3.jpg",
+  "/work4.jpg",
+  "/work5.jpg",
+  "/work6.jpg",
 ];
 
 export default function HomePage() {
