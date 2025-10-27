@@ -15,6 +15,15 @@ const workImages = [
   "/work4.jpg",
   "/work5.jpg",
   "/work6.jpg",
+  "/work7.jpg",
+  "/work8.jpg",
+  "/work9.jpg",
+  "/work10.jpg",
+  "/work11.jpg",
+  "/work12.jpg",
+  "/work13.jpg",
+  "/work14.jpg",
+  "/work15.jpg",
 ];
 
 export default function HomePage() {
