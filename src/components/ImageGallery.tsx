@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useSpring, useMotionValue } from "framer-motion";
 import Image from "next/image";
 
 interface ImageGalleryProps {
@@ -9,65 +9,105 @@ interface ImageGalleryProps {
   children: React.ReactNode;
 }
 
+interface ImageItem {
+  id: number;
+  src: string;
+  x: number;
+  y: number;
+}
+
 export default function ImageGallery({ images, children }: ImageGalleryProps) {
-  const [hoverImage, setHoverImage] = useState<string | null>(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [displayedImages, setDisplayedImages] = useState<ImageItem[]>([]);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const lastMoveTime = useRef(0);
+  const imageIdCounter = useRef(0);
+  const throttleDelay = 150; // Show new image every 150ms
+
+  const smoothMouseX = useSpring(mouseX, {
+    damping: 25,
+    stiffness: 200,
+  });
+
+  const smoothMouseY = useSpring(mouseY, {
+    damping: 25,
+    stiffness: 200,
+  });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const { clientX, clientY } = e;
+    const now = Date.now();
     
-    setPosition({ x: clientX, y: clientY });
-    
-    const randomImage = images[Math.floor(Math.random() * images.length)];
-    setHoverImage(randomImage);
-    
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
+    mouseX.set(e.clientX);
+    mouseY.set(e.clientY);
+
+    // Throttle image creation
+    if (now - lastMoveTime.current < throttleDelay) {
+      return;
     }
+
+    lastMoveTime.current = now;
+
+    // Pick a random image
+    const randomImage = images[Math.floor(Math.random() * images.length)];
     
-    timeoutRef.current = setTimeout(() => {
-      setHoverImage(null);
-    }, 2000);
+    const newImage: ImageItem = {
+      id: imageIdCounter.current++,
+      src: randomImage,
+      x: e.clientX,
+      y: e.clientY,
+    };
+
+    setDisplayedImages((prev) => [...prev, newImage]);
+
+    // Remove image after 1.5 seconds
+    setTimeout(() => {
+      setDisplayedImages((prev) => prev.filter((img) => img.id !== newImage.id));
+    }, 1500);
   };
 
   useEffect(() => {
     return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+      setDisplayedImages([]);
     };
   }, []);
 
   return (
     <div onMouseMove={handleMouseMove} className="relative w-full h-full">
       {children}
-      
+
+      {/* Floating Images */}
       <AnimatePresence>
-        {hoverImage && (
+        {displayedImages.map((image) => (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
+            key={image.id}
+            initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            exit={{ opacity: 0, scale: 0.8, rotate: 10 }}
+            transition={{
+              duration: 0.4,
+              ease: [0.16, 1, 0.3, 1], // Custom easing for smooth effect
+            }}
             style={{
               position: "fixed",
-              left: position.x + 20,
-              top: position.y - 100,
+              left: image.x - 150, // Center the image on cursor
+              top: image.y - 150,
               pointerEvents: "none",
               zIndex: 1000,
             }}
-            className="w-64 h-64 rounded-xl overflow-hidden border-2 border-white/20 shadow-2xl"
+            className="w-[300px] h-[300px] rounded-2xl overflow-hidden shadow-2xl"
           >
-            <Image
-              src={hoverImage}
-              alt="Work sample"
-              width={256}
-              height={256}
-              className="w-full h-full object-cover"
-              unoptimized
-            />
+            <div className="relative w-full h-full border-4 border-white/10 rounded-2xl overflow-hidden">
+              <Image
+                src={image.src}
+                alt="Work sample"
+                fill
+                className="object-cover"
+                unoptimized
+                sizes="300px"
+              />
+            </div>
           </motion.div>
-        )}
+        ))}
       </AnimatePresence>
     </div>
   );
