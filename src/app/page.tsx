@@ -23,7 +23,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen">
       {/* Simplified Hero Section */}
-      <section className="container py-20 md:py-32 relative overflow-hidden">
+      <section className="container py-20 md:py-32 pb-32 md:pb-48 relative overflow-hidden min-h-[80vh]">
         <ImageGallery images={workImages}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -61,7 +61,7 @@ export default function HomePage() {
       </section>
 
       {/* Expertise Section */}
-      <section className="container py-16 md:py-24 border-t border-white/5">
+      <section className="container py-24 md:py-32 border-t border-white/5">
         <h2 className="text-3xl md:text-4xl font-bold mb-12">What I Do</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
