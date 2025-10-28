@@ -89,21 +89,21 @@ export default function ImageGallery({ images, children }: ImageGalleryProps) {
             }}
             style={{
               position: "fixed",
-              left: image.x - 150, // Center the image on cursor
-              top: image.y - 150,
+              left: image.x - 100, // Center the image on cursor
+              top: image.y - 100,
               pointerEvents: "none",
               zIndex: 1000,
             }}
-            className="w-[300px] h-[300px] rounded-2xl overflow-hidden shadow-2xl"
+            className="w-[200px] h-[200px] rounded-xl overflow-hidden shadow-2xl"
           >
-            <div className="relative w-full h-full border-4 border-white/10 rounded-2xl overflow-hidden">
+            <div className="relative w-full h-full border-2 border-white/10 rounded-xl overflow-hidden">
               <Image
                 src={image.src}
                 alt="Work sample"
                 fill
                 className="object-cover"
                 unoptimized
-                sizes="300px"
+                sizes="200px"
               />
             </div>
           </motion.div>
