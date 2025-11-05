@@ -145,7 +145,7 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-5">
               {featured.map((p, index) => (
                 <motion.div
                   key={p.slug}
@@ -154,7 +154,9 @@ export default function HomePage() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.15, duration: 0.6 }}
                 >
-                  <ProjectCard p={p} />
+                  <div className="scale-[0.9] md:scale-90">
+                    <ProjectCard p={p} />
+                  </div>
                 </motion.div>
               ))}
             </div>
