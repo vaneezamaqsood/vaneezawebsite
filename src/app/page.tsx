@@ -127,7 +127,7 @@ export default function HomePage() {
 
       {/* Featured Work Section */}
       <section className="py-32 md:py-40">
-        <div className="container">
+        <div className="container max-w-5xl">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -145,7 +145,7 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {featured.map((p, index) => (
                 <motion.div
                   key={p.slug}
