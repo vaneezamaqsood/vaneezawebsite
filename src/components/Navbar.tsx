@@ -16,7 +16,7 @@ export default function Navbar() {
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="sticky top-0 z-50 border-b border-white/10 bg-bg/80 backdrop-blur-md"
+      className="absolute top-0 left-0 right-0 z-50 bg-transparent"
     >
       <nav className="container flex items-center justify-between py-4">
         <Link href="/" className="text-xl font-bold">

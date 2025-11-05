@@ -31,7 +31,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen">
       {/* Hero Section with Image Gallery */}
-      <section className="w-full min-h-screen flex items-center justify-center relative overflow-hidden">
+      <section className="w-full min-h-[92vh] flex items-center justify-center relative overflow-hidden">
         <ImageGallery images={workImages}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -39,12 +39,12 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
             className="max-w-5xl mx-auto px-6 relative z-10 text-center"
           >
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold leading-tight mb-8">
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold leading-[0.95] tracking-tight mb-8">
               Hi, I&apos;m{" "}
               <span className="text-white">Vaneeza Maqsood</span>
             </h1>
             
-            <p className="text-2xl md:text-3xl lg:text-4xl text-muted mb-12">
+            <p className="text-2xl md:text-3xl lg:text-4xl text-muted/90 mb-12 max-w-4xl mx-auto leading-snug">
               Product Designer & Ecosystem Lead crafting meaningful connections between people, technology, and community.
             </p>
             
@@ -85,20 +85,20 @@ export default function HomePage() {
       </section>
 
       {/* Story Section */}
-      <section className="py-32 md:py-40 bg-gradient-to-b from-bg to-card">
+      <section className="py-28 md:py-36 bg-gradient-to-b from-bg to-card">
         <div className="container max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
-            <h2 className="text-5xl md:text-7xl font-bold mb-8">
+            <h2 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05] mb-8">
               The story behind{" "}
               <span className="gradient-text">my work</span>
             </h2>
             
-            <div className="space-y-6 text-xl md:text-2xl text-muted leading-relaxed">
+            <div className="space-y-6 text-xl md:text-2xl text-muted/90 leading-relaxed max-w-5xl">
               <p>
                 Over the past few years, I&apos;ve been building experiences that don&apos;t just look good—they feel right. What started as a curiosity in design systems has grown into a deep passion for creating digital products that truly connect.
               </p>
@@ -125,17 +125,58 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Featured Work Section */}
-      <section className="py-32 md:py-40">
+      {/* FAQ Section */}
+      <section className="py-24 md:py-32">
         <div className="container max-w-5xl">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="flex items-end justify-between mb-16">
-              <h2 className="text-5xl md:text-7xl font-bold">Cases</h2>
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tight mb-12">FAQs</h2>
+            <div className="space-y-6">
+              {[{
+                q: "How much does a website cost?",
+                a: "Every project is custom. Simple sites start around €800. Motion, strategy or complex features are quoted to fit the need."
+              },{
+                q: "What services do you offer?",
+                a: "Product design, front-end, microinteractions, UX, and content structure—focused on clarity and impact."
+              },{
+                q: "Who will I work with?",
+                a: "Directly with me—no layers. Clear comms, quick iterations, high craft."
+              },{
+                q: "Can you build from an external design?",
+                a: "Yes. I translate Figma into fast, faithful, production-ready builds—pixel-accurate."
+              }].map((item, i) => (
+                <motion.div
+                  key={item.q}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.05, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  className="rounded-xl border border-white/10 bg-card/60 p-6"
+                >
+                  <h3 className="text-xl md:text-2xl font-semibold mb-2">{item.q}</h3>
+                  <p className="text-muted/90 text-base md:text-lg leading-relaxed">{item.a}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Featured Work Section */}
+      <section className="py-28 md:py-36">
+        <div className="container max-w-5xl">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="flex items-end justify-between mb-14">
+              <h2 className="text-5xl md:text-7xl font-bold tracking-tight">Cases</h2>
               <Link
                 href="/work"
                 className="group text-xl text-muted hover:text-fg transition-colors"
@@ -152,9 +193,9 @@ export default function HomePage() {
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.15, duration: 0.6 }}
+                  transition={{ delay: index * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <div className="scale-[0.9] md:scale-90">
+                  <div className="scale-[0.86] md:scale-90">
                     <ProjectCard p={p} />
                   </div>
                 </motion.div>
@@ -171,7 +212,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-wrap gap-4 justify-center text-xl md:text-2xl"
           >
             {["CREATIVE", "IMMERSIVE", "STRATEGIC", "IMPACTFUL"].map((tag) => (
@@ -194,7 +235,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-4xl mx-auto text-center"
           >
             <h2 className="text-5xl md:text-7xl font-bold mb-8">
